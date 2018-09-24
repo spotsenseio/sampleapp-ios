@@ -1,0 +1,32 @@
+PODS:
+  - Alamofire (4.7.2)
+  - JWTDecode (2.1.1)
+  - SpotSense (0.1.0):
+    - Alamofire
+    - JWTDecode
+
+DEPENDENCIES:
+  - SpotSense (from `https://github.com/spotsenseio/spotsenseSDK-ios.git`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - JWTDecode
+
+EXTERNAL SOURCES:
+  SpotSense:
+    :git: https://github.com/spotsenseio/spotsenseSDK-ios.git
+
+CHECKOUT OPTIONS:
+  SpotSense:
+    :commit: 02dc278534b3b0826d593e8c4d08bcabb3ccff36
+    :git: https://github.com/spotsenseio/spotsenseSDK-ios.git
+
+SPEC CHECKSUMS:
+  Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
+  JWTDecode: 83e8b381aafe27158d9f692cbdca2b12d61d460c
+  SpotSense: 2840b15cc2a4536e8e4a8760c033e64c1c1dc9f5
+
+PODFILE CHECKSUM: a7f5e5b81dafcbc4c9bd3c116e57f70d95d19b9e
+
+COCOAPODS: 1.5.3

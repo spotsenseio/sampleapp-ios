@@ -1,0 +1,6 @@
+framework module SpotSense {
+  umbrella header "SpotSense-umbrella.h"
+
+  export *
+  module * { export * }
+}
