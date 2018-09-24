@@ -81,6 +81,7 @@
 		3243171021586DA100ABDA34 = {
 			isa = PBXGroup;
 			children = (
+				32280F092158905E00D8093B /* README.md */,
 				3243171B21586DA100ABDA34 /* podtest */,
 				3243173021586DA300ABDA34 /* podtestUITests */,
 				3243171A21586DA100ABDA34 /* Products */,
@@ -107,7 +108,6 @@
 				3243172321586DA300ABDA34 /* Assets.xcassets */,
 				3243172521586DA300ABDA34 /* LaunchScreen.storyboard */,
 				3243172821586DA300ABDA34 /* Info.plist */,
-				32280F092158905E00D8093B /* README.md */,
 			);
 			path = podtest;
 			sourceTree = "<group>";
