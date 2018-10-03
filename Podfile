@@ -6,7 +6,7 @@ target 'podtest' do
   use_frameworks!
 
   # Pods for podtest
-  pod 'SpotSense', :git => 'https://github.com/spotsenseio/spotsenseSDK-ios.git'
+  pod 'SpotSense', '~>0.1'
 
   target 'podtestUITests' do
     inherit! :search_paths
