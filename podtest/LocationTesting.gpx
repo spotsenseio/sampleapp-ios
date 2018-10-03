@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="Xcode">
+    
+    <!--
+     Provide one or more waypoints containing a latitude/longitude pair. If you provide one
+     waypoint, Xcode will simulate that specific location. If you provide multiple waypoints,
+     Xcode will simulate a route visiting each waypoint.
+     -->
+    <!--
+     Optionally provide a time element for each waypoint. Xcode will interpolate movement
+     at a rate of speed based on the time elapsed between each waypoint. If you do not provide
+     a time element, then Xcode will use a fixed rate of speed.
+     
+     Waypoints must be sorted by time in ascending order.
+     -->
+    
+    <!--
+        Test your geofence by inputting a coordinate inside the geofence below
+        To simulate entering the geofence, select a location outside the geofence first, e.g. London, UK (assuming your geofence is not there), and then select this GPX file for simulating location (with a coordinate inside your geofence already inputted)
+        To simulate entering the geofence, select this GPX file for simulating location first, and then select a location outside the geofence
+     -->
+    
+    
+    <wpt lat="33.41488471568328" lon="-111.92378172741701">
+        <name>Inside the geofence</name>
+        <time>2014-09-24T14:55:30Z</time>
+    </wpt>
+</gpx>
