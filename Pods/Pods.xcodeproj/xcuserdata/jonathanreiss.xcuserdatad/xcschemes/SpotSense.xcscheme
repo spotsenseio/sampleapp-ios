@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A6620F7C90E4C34A98D53DFF8D0E6ED7"
+               BlueprintIdentifier = "8818C0E1BFC49112DB1B7EEFAB741AE6"
                BlueprintName = "SpotSense"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "SpotSense.framework">
