@@ -1,6 +1,6 @@
 //
-//  podtestUITests.swift
-//  podtestUITests
+//  SampleAppUITests.swift
+//  SampleAppUITests
 //
 //  Created by Jonathan Reiss on 9/23/18.
 //  Copyright © 2018 SpotSense. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class podtestUITests: XCTestCase {
+class SampleAppUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()

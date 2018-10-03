@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  podtest
+//  SampleApp
 //
 //  Created by Jonathan Reiss on 9/23/18.
 //  Copyright © 2018 SpotSense. All rights reserved.
