@@ -11,8 +11,7 @@ import SpotSense
 import CoreLocation
 import UserNotifications // required if sending notifications with SpotSense
 
-//let spotsense = SpotSense(clientID: "sample-client-id", clientSecret: "sample-client-secret") // replace these vlaues
-let spotsense = SpotSense(clientID: "V7l6J25A8TZbdS9N6cRYhRlWo9BuNDVq", clientSecret: "3mIEVJDocjRoTH2MBLxBwqsOQnUBUFA3W5oP6XY1m2cmjzRkLf-gpV40aHH6GjEU") // shorestore
+let spotsense = SpotSense(clientID: "sample-client-id", clientSecret: "sample-client-secret") // replace these vlaues
 
 class ViewController: UIViewController, CLLocationManagerDelegate, UNUserNotificationCenterDelegate, SpotSenseDelegate  {
     let locationManager : CLLocationManager = CLLocationManager()
