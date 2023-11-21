@@ -1,7 +1,7 @@
 #  SpotSense SDK
 ## Requirements
-* iOS 10+
-* Swift 4.0+
+* iOS 11+
+* Swift 4.2+
 
 ## Getting Started
 ### Create an App
@@ -21,7 +21,7 @@
     ```
     target 'your-app' do
         # Pods for your-app
-        pod 'SpotSense', '~>0.1'
+                pod 'SpotSense', :git => 'https://github.com/spotsenseio/spotsenseSDK-ios.git', :commit => 'eec95b4'
     end
     ```
 
@@ -31,10 +31,14 @@
 3. `import spotsense` and initialize SpotSense with Client ID and Secret from the Dashboard
 ```swift
 import UIKit
-import CoreLocation
 import SpotSense
+import CoreLocation
+import UserNotifications
+
+let notificationCenter = UNUserNotificationCenter.current()
 
 let spotsense = SpotSense(clientID: "client-id", clientSecret: "client-secret")
+
 class ViewController: UIViewController, CLLocationManagerDelegate, SpotSenseDelegate {...}
 ```
 
@@ -43,42 +47,82 @@ Note: Apple requires developers to add a description of why they are using a use
 
 ```swift
 let locationManager : CLLocationManager = CLLocationManager()
-let notificationCenter = UNUserNotificationCenter.current()
 
 override func viewDidLoad() {
     super.viewDidLoad()
 
-    // get location permissions
-    locationManager.requestAlwaysAuthorization()
-    locationManager.delegate = self
-    spotsense.delegate = self;
-
+    // get notification permission, only required if sending notifications with SpotSense
+    notificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+        spotsense.notificationStatus(enabled: granted);
+        }
+            // get location permissions
+            locationManager.delegate = self
+            locationManager.activityType = .automotiveNavigation
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.distanceFilter = 5.0
+            locationManager.requestAlwaysAuthorization()
+            locationManager.startUpdatingLocation()
+            spotsense.delegate = self; // attach spotsense delegate to self
+            
     if (CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse) {
         if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) { // Make sure region monitoring is supported.
-            spotsense.getRules {}
+      
         }
     }
+    spotsense.delegate = self; // attach spotsense delegate to self
+
 }
 
-func ruleDidTrigger(response: NotifyResponse, ruleID: String) { // delegate for handling rule triggers
-    switch response.getActionType() {
-    case "segue":
-        if let segueID = response.segueID {
-            performSegue(withIdentifier: segueID, sender: nil)
-        }
-    case "http":
-        print("HTTP Response: (String(describing: response.getHTTPResponse()))")
-    default:
-        print("")
-    }
-}
+ func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
 
-func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) { // notify spotsense of geofence changes
-    spotsense.handleRegionState(region: region, state: state)
-}
+     //Will Notify Enter event to dashboard for specific region
+     spotsense.handleRegionState(region: region, state: .inside)
+ }
+     
+ func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+     
+     //Will Notify Exit event to dashboard for specific region
+     spotsense.handleRegionState(region: region, state: .outside)
+ }
+ 
+ func didFindBeacon(beaconScanner: SpotSense, beaconInfo: BeaconInfo, data: NSDictionary) {
+     
+     //Will Notify Enter event to dashboard for specific beacon
+     spotsense.handleBeaconEnterState(beaconScanner: beaconScanner, beaconInfo: beaconInfo, data: data)
+  }
+ 
+ func didLoseBeacon(beaconScanner: SpotSense, beaconInfo: BeaconInfo, data: NSDictionary) {
+     
+      //Will Notify Exit event to dashboard for specific beacon
+     spotsense.handleBeaconExitState(beaconScanner: beaconScanner, beaconInfo: beaconInfo, data: data)
+  }
+ 
+ func ruleDidTrigger(response: NotifyResponse, ruleID: String) {
+     
+ }
+ 
+ func didUpdateBeacon(beaconScanner: SpotSense, beaconInfo: BeaconInfo, data: NSDictionary) {
+     
+ }
+ 
+ func didObserveURLBeacon(beaconScanner: SpotSense, URL: NSURL, RSSI: Int) {
+     
+ }
+  
 ```
-4. Select your new app and create a rule in the SpotSense Dashboard
-5. Test your rule out in the real world or in the iOS Simulator!
+## Remember to ask for your users location and bluetooth permissions by adding;
+
+NSLocationAlwaysAndWhenInUseUsageDescription
+NSLocationWhenInUseUsageDescription
+NSBluetoothAlwaysUsageDescription
+
+and explainations to your info.plist e.g $(PRODUCT_NAME) Uses bluetooth to trigger games at certain locations
+
+---
+
+5. Select your new app and create a geofence or beacon in the SpotSense Dashboard
+
+6. Test your proximity event out in the real world or in the iOS Simulator!
 
 Have a question or got stuck? Let us know in the SpotSense Slack Community or shoot us an email (help@spotsense.io). We are happy to help!
 

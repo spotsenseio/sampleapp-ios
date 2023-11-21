@@ -6,7 +6,7 @@ target 'SampleApp' do
   use_frameworks!
 
   # Pods for SampleApp
-  pod 'SpotSense', '~>0.1'
+  pod 'SpotSense', :path => '/Users/apple/Downloads/spotsenseSDK-ios-0.1.4'
 
   target 'SampleAppUITests' do
     inherit! :search_paths

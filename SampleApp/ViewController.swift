@@ -11,26 +11,43 @@ import SpotSense
 import CoreLocation
 import UserNotifications // required if sending notifications with SpotSense
 
-let spotsense = SpotSense(clientID: "sample-client-id", clientSecret: "sample-client-secret") // replace these vlaues
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UNUserNotificationCenterDelegate, SpotSenseDelegate  {
+class ViewController: UIViewController, UNUserNotificationCenterDelegate, SpotSenseDelegate  {
+    func didFindBeacon(beaconScanner: SpotSense, beacon: CLBeacon, data: [String:Any]) {
+        
+        spotsense.handleBeaconEnterState(beaconScanner: beaconScanner, data: data)
+        
+    }
+
+    func didLoseBeacon(beaconScanner: SpotSense, beacon: CLBeacon, data: [String:Any]) {
+        spotsense.handleBeaconExitState(beaconScanner: spotsense, data: data)
+    }
+    
+    func didUpdateBeacon(beaconScanner: SpotSense, beacon: CLBeacon, data: [String:Any]) {
+        
+    }
+    
+    func didObserveURLBeacon(beaconScanner: SpotSense, URL: NSURL, RSSI: Int) {
+        
+    }
+    
     let locationManager : CLLocationManager = CLLocationManager()
     let notificationCenter = UNUserNotificationCenter.current()
+    let spotsense = SpotSense(clientID: "s63HFHDdAUIDKnDdWCKWlcPORnTMvupH",
+                              clientSecret: "3Q46H0d7oqMiCthFSoHt46KSRGxAZc6nEmluc6-_Ru8ngaZ-TFJnzfVwTre7QtYT")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // get notification permission, only required if sending notifications with SpotSense
         notificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
-            spotsense.notificationStatus(enabled: granted);
+            self.spotsense.notificationStatus(enabled: granted)
         }
         
-        // get location permissions
-        locationManager.requestAlwaysAuthorization()
-        locationManager.delegate = self
-        locationManager.startUpdatingLocation()
         
-        spotsense.delegate = self; // attach spotsense delegate to self
+        
+        spotsense.delegate = self // attach spotsense delegate to self
+//        spotsense.startScanning()
         
         if (CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse) {
             if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self) { // Make sure region monitoring is supported.
@@ -49,19 +66,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UNUserNotific
         if let segueID = response.segueID { // performs screenchange
             performSegue(withIdentifier: segueID, sender: nil)
         } else if (response.getActionType() == "http") {
-            let httpResponseBody = response.getHTTPResponse()
+            _ = response.getHTTPResponse()
         }
     }
     
-    // required so spotsense knows which geofences are being triggered
-    func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
-        spotsense.handleRegionState(region: region, state: state)
-    }
-    
-    // Not required: Prints which rules are being monitored for, helpful for debugging
-    func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
-        print("Started monitoring for \(region.identifier)")
-    }
+//    // required so spotsense knows which geofences are being triggered
+//    func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
+//        spotsense.handleRegionState(region: region, state: state)
+//    }
+//
+//    // Not required: Prints which rules are being monitored for, helpful for debugging
+//    func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
+//        print("Started monitoring for \(region.identifier)")
+//    }
 
 }
 
